@@ -1,0 +1,53 @@
+{
+  "admin": {
+    "username": "admin",
+    "password_hash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "email": "admin@pythontraining.local",
+    "created_date": "2025-06-08T12:46:21.345480"
+  },
+  "app_settings": {
+    "theme": "light",
+    "window_width": 450,
+    "window_height": 700,
+    "demo_window_width": 600,
+    "auto_advance_delay": 2000,
+    "questions_per_level": 15
+  },
+  "colors": {
+    "light": {
+      "primary": "#4CAF50",
+      "secondary": "#2196F3",
+      "warning": "#FF9800",
+      "danger": "#f44336",
+      "logout": "#9C27B0",
+      "background": "white",
+      "text": "black",
+      "frame_bg": "#f0f0f0",
+      "button_hover": "#45a049"
+    },
+    "dark": {
+      "primary": "#66BB6A",
+      "secondary": "#42A5F5",
+      "warning": "#FFA726",
+      "danger": "#EF5350",
+      "logout": "#AB47BC",
+      "background": "#2b2b2b",
+      "text": "#ffffff",
+      "frame_bg": "#404040",
+      "button_hover": "#5cbf60"
+    },
+    "night": {
+      "primary": "#4CAF50",
+      "secondary": "#1976D2",
+      "warning": "#FF8F00",
+      "danger": "#D32F2F",
+      "logout": "#7B1FA2",
+      "background": "#1a1a1a",
+      "text": "#ffcc80",
+      "frame_bg": "#333333",
+      "button_hover": "#45a049"
+    }
+  },
+  "first_run": false,
+  "version": "1.0.0"
+}

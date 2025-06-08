@@ -1,5 +1,5 @@
-# =================================Quiz Window Manager==================================
-# quiz_window.py - Manages quiz window creation and module loading
+# =================================Updated Quiz Window Manager - All Quizzes Activated==================================
+# quiz_window.py - Manages quiz window creation and module loading with all quizzes enabled
 import tkinter as tk
 from tkinter import ttk, messagebox
 import importlib
@@ -38,47 +38,57 @@ class QuizWindow:
                 # Dynamically import the quiz module
                 quiz_module = importlib.import_module(module_name)
                 
-                # Get the quiz class name (e.g., QuizStrings)
-                class_name = f"Quiz{command_name.replace('()', '').replace(' ', '').title()}"
-                if command_name == 'str':
-                    class_name = 'QuizStrings'
-                elif command_name == 'print()':
-                    class_name = 'QuizPrint'
-                elif command_name == 'input()':
-                    class_name = 'QuizInput'
-                elif command_name == 'len()':
-                    class_name = 'QuizLen'
-                elif command_name == 'type()':
-                    class_name = 'QuizType'
-                elif command_name == 'range()':
-                    class_name = 'QuizRange'
-                elif command_name == 'list()':
-                    class_name = 'QuizList'
-                elif command_name == 'dict()':
-                    class_name = 'QuizDict'
-                elif command_name == 'for loop':
-                    class_name = 'QuizForLoop'
-                elif command_name == 'if statement':
-                    class_name = 'QuizIfStatement'
-                elif command_name == 'def':
-                    class_name = 'QuizFunctions'
+                # Get the quiz class name - mapping to correct class names
+                class_mapping = {
+                    'str': 'QuizStrings',
+                    'print()': 'QuizPrint',
+                    'input()': 'QuizInput',
+                    'len()': 'QuizLen',
+                    'type()': 'QuizType',
+                    'range()': 'QuizRange',
+                    'list()': 'QuizList',
+                    'dict()': 'QuizDict',
+                    'for loop': 'QuizForLoop',
+                    'if statement': 'QuizIfStatement',
+                    'def': 'QuizFunctions'
+                }
                 
-                # Create quiz window using the module's quiz class
-                quiz_class = getattr(quiz_module, class_name)
-                self.quiz_module = quiz_class(self.parent_root, self.user_data)
-                self.quiz_module.show()
-                self.window = self.quiz_module.window
+                class_name = class_mapping.get(command_name)
+                
+                if class_name:
+                    # Create quiz window using the module's quiz class
+                    quiz_class = getattr(quiz_module, class_name)
+                    self.quiz_module = quiz_class(self.parent_root, self.user_data)
+                    self.quiz_module.show()
+                    self.window = self.quiz_module.window
+                else:
+                    messagebox.showerror("Error", f"Quiz class not found for {command_name}")
                 
             except ImportError as e:
-                # Show coming soon message for unimplemented quizzes
-                messagebox.showinfo("Coming Soon", 
-                                   f"The {command_name} quiz is being developed and will be available soon!\n\n"
-                                   f"In the meantime, you can try the {command_name} demo to practice.")
+                # Show detailed error message for debugging
+                messagebox.showerror("Module Error", 
+                                   f"Could not load quiz module '{module_name}' for {command_name}.\n\n"
+                                   f"Error: {str(e)}\n\n"
+                                   f"Please ensure the quiz module file exists and is properly implemented.")
+                print(f"ImportError loading {module_name}: {e}")
+                
             except AttributeError as e:
                 # Show error if class not found
-                messagebox.showerror("Error", f"Quiz class not found for {command_name}")
+                messagebox.showerror("Class Error", 
+                                   f"Quiz class '{class_name}' not found in module '{module_name}'.\n\n"
+                                   f"Error: {str(e)}\n\n"
+                                   f"Please ensure the quiz class is properly defined.")
+                print(f"AttributeError: {e}")
+                
+            except Exception as e:
+                # Generic error handler
+                messagebox.showerror("Unexpected Error", 
+                                   f"An unexpected error occurred while loading the quiz:\n\n"
+                                   f"Error: {str(e)}\n\n"
+                                   f"Please check the quiz module implementation.")
+                print(f"Unexpected error: {e}")
         else:
-            messagebox.showinfo("Coming Soon", f"Quiz for {command_name} coming soon!")
+            messagebox.showerror("Error", f"No quiz module mapping found for '{command_name}'")
     
     def close(self):
         """Close the quiz window"""
